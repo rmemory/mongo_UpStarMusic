@@ -6,4 +6,20 @@ const Artist = require('../models/artist');
  * containing the min and max ages, like { min: 16, max: 45 }.
  */
 module.exports = () => {
+	const minQuery = Artist
+		.find({})
+		.sort({ age: 1 })
+		.limit(1) // Make sure Mongo only returns a single record from DB (performance)
+		.then(artists => artists[0].age); // Execute query, only care about the age and nothing else
+
+	const maxQuery = Artist
+		.find({})
+		.sort({ age: -1 })
+		.limit(1) // Make sure Mongo only returns a single record from DB (performance)
+		.then(artists => artists[0].age); // Execute query, only care about the age and nothing else
+
+	return Promise.all([minQuery, maxQuery])
+		.then((result) => {
+			return { min: result[0], max: result[1] };
+		});
 };
