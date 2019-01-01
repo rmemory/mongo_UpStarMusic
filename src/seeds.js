@@ -69,5 +69,5 @@ function randomEntry(array) {
 }
 
 function randomBetween(min, max) {
-  return ~~(Math.random() * (max-min)) + min;
+  return ~~(Math.random() * (max - min)) + min;
 }
